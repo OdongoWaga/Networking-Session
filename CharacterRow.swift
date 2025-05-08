@@ -6,11 +6,23 @@
 import SwiftUI
 
 struct CharacterRow: View {
+    
+    var character: Character
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        HStack{
+            AsyncImage(url: character.image) { image in
+                
+                image
+                    .resizable()
+                    .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+                    .frame(width: 100, height: 100)
+            } placeholder: {
+                ProgressView()
+            }
+            Text(character.name)
+        }
     }
 }
 
-#Preview {
-    CharacterRow()
-}
+

@@ -6,14 +6,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    let vm = NetworkService()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            List(vm.characters) { character in
+                CharacterRow(character: character)
+            }
+            
         }
-        .padding()
+        .onAppear {
+            
+            Task {
+                           await vm.fetchCharacters()
+                       }
+          
+        }
+        
     }
 }
 
