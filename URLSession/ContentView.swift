@@ -4,24 +4,33 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     
-    let vm = NetworkService()
+   // let vm = NetworkService()
+    @Environment(\.modelContext) private var modelContext
+    @Query private var characters: [CharacterModel]
     
     var body: some View {
         VStack {
-            List(vm.characters) { character in
+            List(characters) { character in
                 CharacterRow(character: character)
             }
             
         }
-        .onAppear {
+        .task(priority: .background) {
             
-            Task {
-                           await vm.fetchCharacters()
-                       }
-          
+            let container = modelContext.container
+            let bgActor = CharacterModel.BackgroundActor(modelContainer: container)
+            
+            do {
+                try await bgActor.importCharacters()
+            
+                
+            } catch {
+                print("Error importing characters: \(error)")
+            }
         }
         
     }
