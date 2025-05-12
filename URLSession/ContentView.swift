@@ -19,7 +19,7 @@ struct ContentView: View {
             }
             
         }
-        .task(priority: .background) {
+        .task(priority: .userInitiated) {
             
             let container = modelContext.container
             let bgActor = CharacterModel.BackgroundActor(modelContainer: container)

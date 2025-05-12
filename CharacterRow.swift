@@ -20,6 +20,14 @@ struct CharacterRow: View {
 //            } placeholder: {
 //                ProgressView()
 //            }
+            
+            Image(uiImage: character.viewImage)
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+                 .frame(width: 100, height: 100)
+               
+            
+            
             Text(character.name)
         }
     }
